@@ -184,8 +184,8 @@ export default class App extends React.Component {
           for (let originalKey in mainListReference) {
             const peopleList = mainListReference[originalKey];
             console.log(peopleList);
-            for(let key in peopleList){
-              const giftArray = [];
+             const giftArray = [];
+              // const giftArray = [];
               // console.log(peopleList[key])
               for(let gift in peopleList.gifts){
                 giftArray.push(peopleList.gifts[gift])
@@ -195,12 +195,8 @@ export default class App extends React.Component {
                 name:peopleList.name,
                 gifts: giftArray
               })
-            }
-            // newLists.push({
-            //   key: key,
-            //   people: people
-            // }); //closes the push
           } //closes the for 
+          console.log(people)
           this.setState ({
             lists: people
           }); //closes the setState
