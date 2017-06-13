@@ -31,38 +31,44 @@ export default class App extends React.Component {
       enterGiftReceiverName: "",
       passReceiverGiftItems: "",
       enterReceiverGiftItems: "",
+      value: "",
       giftsLists: [{
         gifts:[]
       }],
       loggedIn: false,  //default state for the app, will not be logged in when first opened
       user: null
     }
+    // this.handleDelete = this.handleDelete.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.submitGift = this.submitGift.bind(this);
     this.login = this.login.bind(this);
     this.logout = this.logout.bind(this);
   }
+  // handleDelete(giftToBeDeleted) {
+  //   console.log(giftToBeDeleted);
+  //   const gifts = this.state.gifts.filter((_items) => {
+  //     return _items != itemToBeDeleted
+  //   });
+  //     this.setState({items: gifts});
+  // }
   handleSubmit(e) {
     e.preventDefault();
-    const userId = this.state.user.uid;
-    // const userRef= firebase.database().ref(userId);
 
-    // userRef.push(this.state.passGiftReceiverList);
-    // this.setState({
-    //   passGiftReceiverList: ""
-    // });
+    const userId = this.state.user.uid;
 
     const passGiftReceiverList = firebase.database().ref(userId); //giftReceiverName, passing the list to FB, cant change
     console.log("list creation button is working");
 
     const list = this.state.enterGiftReceiverName;  //enterGiftReceiverName here is referring to the empty list from above in the constructor, this is where the gift receiver name will be stored when entering it on the site
-    console.log(list);
+    // console.log(list);
     passGiftReceiverList.push({
       name: list
     }); //this is pushing the info over to FB
     this.setState({
-      currentList: list //this may change later, but for a starting point to begin working on the list
+      value: "",
+      currentList: list, //this may change later, but for a starting point to begin working on the list
+      enterGiftReceiverName: ""
     });
   }
   handleChange(e) {
@@ -97,13 +103,19 @@ export default class App extends React.Component {
     //then save the value in FB, but in an object associated to the person's name 
 
     const passReceiverGiftItems = firebase.database().ref(`/${firebase.auth().currentUser.uid}/${personKey}/gifts`); //.child("giftItems")
-    console.log("passing the gifts");
-
-    const giftItems = this.state.enterReceiverGiftItems
+    // console.log("passing the gifts");
+    const inputVal = "enterReceiverGiftItems" + personKey;
+    const giftItems = this.state[inputVal];
     passReceiverGiftItems.push(giftItems);
     this.setState({
-      currentGiftItems: giftItems
+      currentGiftItems: giftItems,
+      [inputVal]: ''
     });
+  }
+  removeGift(key) {
+    const userId = this.state.user.uid;
+    const userRef =firebase.database().ref(`${userId}/${key}`);
+    userRef.remove();
   }
   render() {
     // console.log(this.state.lists);
@@ -111,32 +123,43 @@ export default class App extends React.Component {
       if (this.state.loggedIn === true) {
     		return (
     			<div className="app"> {/*root enveloping DOM begins*/}
-            <nav>
-              <button onClick={this.logout}>Log Out</button>
+            <nav className="logOutContainer clearfix">
+              <h1 className>Present Planner</h1>
+              <div className="bubbleBox">
+                <div className="logBubble">
+                  <img  src="../../images/buttonbubble.png" alt="Yellow pop art style speech bubble."/>
+                </div>
+              </div>
+              <button className="logOutButton" onClick={this.logout}>Log Out</button>
             </nav>
-            <div className="container">
-              <section className="createGiftReceiverInfo">
-                <form>
-                  <input name="enterGiftReceiverName" onChange={this.handleChange} type="text" placeholder="Enter Gift Receiver's Name"/>
-                  <button onClick={this.handleSubmit}>Create New Gift Receiver List</button>
-                </form>
+
+            <div className="giftReceiverFormContainer">
+              <section className="createGiftReceiverInfoSection">
+                <form className="createGiftReceiverForm">
+                  <input value={this.state.enterGiftReceiverName} name="enterGiftReceiverName" onChange={this.handleChange} type="text" placeholder="Enter Gift Receiver's Name"/>                                
+                  <button className="createGiftReceiverButton" onClick={this.handleSubmit}>Create New Gift Receiver List</button>
+                </form> {/*giftReceiverForm ends*/}
               </section> {/*createGiftReceiverInfo list section ends*/}     
               <section className="displayGiftReceiverLists">
                 <div className="wrapper">
                   <ul>
                     {this.state.lists.map((person) => {
                       // console.log(person);
+                      const inputVal = 'enterReceiverGiftItems' + person.key;
                       return (
-                        <li key={person.key}>
+                        <li className="giftList" key={person.key}>
                           <p>{person.name}</p>
                           <form onSubmit={(e) => this.submitGift(e,person.key)}>
-                            <input name="enterReceiverGiftItems" onChange={this.handleChange} type="text" placeholder="Enter Present Info"/>
+                            <input name={`enterReceiverGiftItems${person.key}`} onChange={this.handleChange} type="text" placeholder="Enter Present Info" value={this.state[inputVal]}/>
                             <input type="submit" />
                           </form>
                           <ul>
                             {person.gifts.map((gift) => {
                               return (
-                                <li>{gift}</li>
+                                <div>
+                                  <li>{gift}</li>
+                                {/*<button onClick={ this.props.handleDelete.bind(null, gifts)}> x </button>*/}
+                                </div>
                               )
                             })}
                           </ul>
@@ -146,20 +169,40 @@ export default class App extends React.Component {
                   </ul>                
                 </div> {/*wrapper ends*/}
               </section> {/*displayGiftReceiverLists section ends*/}     
-            </div> {/*container ends*/}
+            </div> {/* giftReceiverFormContainer ends*/}
     			</div> // root enveloping DOM ends
     		) //closes the return   
       } else { //the if ends here before the else
         return (
           <div>
-            <button onClick={this.login}>Log In</button>
+              <div className="loginContainer">
+                <div className="logBubble">
+                  <img  src="../../images/buttonbubble.png" alt="Yellow pop art style speech bubble."/>
+                </div>
+                <div className="logInButton">
+                  <button  onClick={this.login}>Log In</button>
+                </div>
+              </div>
+            <main className="logInPage">
+              <div className="titleContainer">
+                <div className="logInTitle1">
+                  <img src="../../images/popartbubble.png" alt="White pop art style speech bubble with explosion behind it."/>
+                </div>
+                <div className="logInTitle2">
+                  {/*<h2>Present</h2>
+                  <h2>Planner</h2>*/}
+                </div>
+              </div>
+              <div>
+                {/*<p>screenshots?</p>*/}
+              </div>
+            </main>
           </div>
         ) //return ends
       } //closes the else
     }
     return (
       <main>
-        <h1>Christmas Planner</h1>
         {showChristmasPlanner()}
       </main>
     ) //closes the return
