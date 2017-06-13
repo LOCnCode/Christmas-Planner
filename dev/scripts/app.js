@@ -124,22 +124,25 @@ export default class App extends React.Component {
     		return (
     			<div className="app"> {/*root enveloping DOM begins*/}
             <nav className="logOutContainer clearfix">
-              <h1 className>Present Planner</h1>
-              <div className="bubbleBox">
-                <div className="logBubble">
-                  <img  src="../../images/buttonbubble.png" alt="Yellow pop art style speech bubble."/>
-                </div>
-              </div>
-              <button className="logOutButton" onClick={this.logout}>Log Out</button>
+              <h1 className="logOutTitle">Present Planner</h1>
+              <div className="navSplit">
+                <div className="bubbleBox">
+                  <div className="logBubble">
+                    <img  src="../../images/buttonbubble.png" alt="Yellow pop art style speech bubble."/>
+                  </div>
+                  <button className="logOutButton" onClick={this.logout}>Log Out</button>
+                </div> {/*bubbBox ends*/}
+              </div> {/*navSplit endss*/}
             </nav>
 
+            <section className="createGiftReceiverInfoSection">
+              <form className="createGiftReceiverForm">
+                <input value={this.state.enterGiftReceiverName} name="enterGiftReceiverName" onChange={this.handleChange} type="text" placeholder="Enter Gift Receiver's Name"/>                                
+                <button disabled={!this.state.enterGiftReceiverName} className="createGiftReceiverButton" onClick={this.handleSubmit}>Create New Gift List</button>
+              </form> {/*giftReceiverForm ends*/}
+            </section> {/*createGiftReceiverInfo list section ends*/}  
+
             <div className="giftReceiverFormContainer">
-              <section className="createGiftReceiverInfoSection">
-                <form className="createGiftReceiverForm">
-                  <input value={this.state.enterGiftReceiverName} name="enterGiftReceiverName" onChange={this.handleChange} type="text" placeholder="Enter Gift Receiver's Name"/>                                
-                  <button className="createGiftReceiverButton" onClick={this.handleSubmit}>Create New Gift Receiver List</button>
-                </form> {/*giftReceiverForm ends*/}
-              </section> {/*createGiftReceiverInfo list section ends*/}     
               <section className="displayGiftReceiverLists">
                 <div className="wrapper">
                   <ul>
@@ -148,16 +151,18 @@ export default class App extends React.Component {
                       const inputVal = 'enterReceiverGiftItems' + person.key;
                       return (
                         <li className="giftList" key={person.key}>
-                          <p>{person.name}</p>
+                          <div className="nameContainer">
+                            <p className="personName">{person.name}</p>
+                          </div>
                           <form onSubmit={(e) => this.submitGift(e,person.key)}>
-                            <input name={`enterReceiverGiftItems${person.key}`} onChange={this.handleChange} type="text" placeholder="Enter Present Info" value={this.state[inputVal]}/>
-                            <input type="submit" />
+                            <input name={`enterReceiverGiftItems${person.key}`} onChange={this.handleChange} type="text" placeholder="Enter Gift Items" value={this.state[inputVal]}/>
+                            <input disabled={!this.state[inputVal]} type="submit" />
                           </form>
                           <ul>
                             {person.gifts.map((gift) => {
                               return (
-                                <div>
-                                  <li>{gift}</li>
+                                <div className="listItemContainer">
+                                  <li className="gifts">{gift}</li>
                                 {/*<button onClick={ this.props.handleDelete.bind(null, gifts)}> x </button>*/}
                                 </div>
                               )
@@ -170,6 +175,16 @@ export default class App extends React.Component {
                 </div> {/*wrapper ends*/}
               </section> {/*displayGiftReceiverLists section ends*/}     
             </div> {/* giftReceiverFormContainer ends*/}
+            <footer>
+              <div className="footerContainer FCL">
+                <a class="twitter-share-button" href="https://twitter.com/intent/ QWET
+                + text=Never%20forget%20a%20gift%20again%20with%20this%20Present%20Planner%20by%20@LOCnCode" data-size="large"><i className="fa fa-twitter" aria-hidden="true"></i>Share!</a>
+                <a className="personalTwitter" href="https://twitter.com/LOCnCode" target="_blank"><i className="fa fa-twitter-square" aria-hidden="true"></i>Tweet Me!</a>
+              </div>
+              <div className="footerContainer">
+                <p>&copy;Laurie OConnor 2017</p>
+              </div> {/* footerContainer ends*/}
+            </footer>
     			</div> // root enveloping DOM ends
     		) //closes the return   
       } else { //the if ends here before the else
@@ -197,6 +212,7 @@ export default class App extends React.Component {
                 {/*<p>screenshots?</p>*/}
               </div>
             </main>
+            
           </div>
         ) //return ends
       } //closes the else

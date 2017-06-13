@@ -53,17 +53,40 @@
 }
 
 .logOutContainer {
-	position: relative;
-	float: right;
-	margin: 2%;
+	margin: 0 2%;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	// justify-content: center;
+	justify-content: space-between;
 }
+ .logOutTitle, .navSplit {
+ 	width: 50%;
+}
+
+h1 {
+	font-family: 'Bangers', cursive;
+	color: white;
+  margin: 0;
+  font-size: 70px;
+  letter-spacing: 9px;
+  text-shadow: 1px 3px 1px black;
+}
+
+ .bubbleBox {
+ 	position: relative;
+	width: 25%;
+  float: right;
+  margin-top:3%
+ }
 
 .logOutButton {
 	position: absolute;
-	// top: 22px;
- //  left: 10px;
-  padding: 13%;
+  top: 4px;
+  left: 6px;
+  padding: 20% 11%;
 	background-color: transparent;
 	border: none;
-
+	font-family: 'Bangers', cursive;
+	font-size: 20px;
 }

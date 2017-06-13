@@ -10,12 +10,10 @@
 // font-family: 'Ceviche One', cursive;
 // font-family: 'Yesteryear', cursive;
 
-.wrapper {
-	background-color: rgba(255,255,255,0.5);
-	width: 1170px;
-
+body {
+	margin: 0;
+	font-family: 'Bangers', cursive;
 }
-
 main {
 	margin: 0;
 	background-image: url(../../images/xmas-sac-cropped.jpg);
@@ -24,27 +22,48 @@ main {
 	background-attachment: fixed;
 }
 
-h1 {
-	font-family: 'Bangers', cursive;
-	color: white;
-	font-size: 50px;
+.wrapper {
+	// background-color: rgba(255,255,255,0.5);
+	width: 1170px;
+	padding-bottom: 100vh;
 }
 
 .createGiftReceiverInfoSection {
-	background-color:lime;
-
-}
-
-.giftReceiverFormContainer {
-	clear: both;
+	width: 100%;
 }
 
 .createGiftReceiverForm {
-	padding: 100vh;
+	width: 40%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  margin-left: 2%;
+}
+
+input[name="enterGiftReceiverName"] {
+	font-size: 20px;
+	padding: 10px;
+	border-radius: 5px;
 }
 
 .createGiftReceiverButton {
+	width: 25%;
+  min-width: 225px;
+  background-color: #FFF579;
+  border-radius: 5px;
+  padding: 10px;
+  margin: 0 2%;
+  // font-family: 'Bangers', cursive;
+  text-shadow: 1px 1px 1px white;
+  letter-spacing: 1px;
+  color: black;
+  font-size: 20px;
+}
 
+
+.giftReceiverFormContainer {
+	clear: both;
 }
 
 .displayGiftReceiverLists {
@@ -54,10 +73,61 @@ h1 {
 	justify-content: center;
 }
 
-
 .giftList {
 	display: inline-block;
+	vertical-align: middle;
 	min-height: 300px;
-	background-color: lemonchiffon;
-	margin: 2%;
+	background-color: rgba(255, 255, 255, 0.85);
+  margin: 1%;
+  padding: 1%;
+  border-radius: 5px;
 }
+
+.nameContainer {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+}
+
+.personName {
+	font-size: 30px;
+  letter-spacing: 2px;
+  margin: 3%;
+  padding: 2%;
+}
+
+.listItemContainer {
+	padding-top: 4%;
+}
+
+footer {
+	font-size: 30px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+
+footer p {
+	color: #FFF579;
+	letter-spacing: 4px;
+}
+
+.personalTwitter, .footerContainer a {
+	color: #FFF579;
+	text-decoration: none;
+	margin: 0 2%;
+}
+
+.footerContainer {
+	width: 50%;
+	text-shadow: 1px 1px 1px black;
+	letter-spacing: 2px;
+	display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.FCL {
+	font-size: 20px;}
