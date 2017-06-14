@@ -45,13 +45,6 @@ export default class App extends React.Component {
     this.login = this.login.bind(this);
     this.logout = this.logout.bind(this);
   }
-  // handleDelete(giftToBeDeleted) {
-  //   console.log(giftToBeDeleted);
-  //   const gifts = this.state.gifts.filter((_items) => {
-  //     return _items != itemToBeDeleted
-  //   });
-  //     this.setState({items: gifts});
-  // }
   handleSubmit(e) {
     e.preventDefault();
 
@@ -112,10 +105,12 @@ export default class App extends React.Component {
       [inputVal]: ''
     });
   }
-  removeGift(key) {
+  removeGift(gift) {
     const userId = this.state.user.uid;
-    const userRef =firebase.database().ref(`${userId}/${key}`);
-    userRef.remove();
+    const userRef =firebase.database().ref(`${userId}/${gift.key}`); //this should be the key for the delete, not the gift
+    // userRef.remove();
+    // console.log(`${userId}/${gift.key}`);
+    console.log(firebase.database().ref("KmZ08TxYxr457mHhNE1/-KmZ0S213a--PmeGAdx-/gifts/-KmZ0TP6eVdBhnPDpej1"));
   }
   render() {
     // console.log(this.state.lists);
@@ -160,10 +155,11 @@ export default class App extends React.Component {
                           </form>
                           <ul>
                             {person.gifts.map((gift) => {
+                              // console.log("the gift", gift)
                               return (
                                 <div className="listItemContainer">
-                                  <li className="gifts">{gift}</li>
-                                {/*<button onClick={ this.props.handleDelete.bind(null, gifts)}> x </button>*/}
+                                  <li className="gifts" key={gift.key}>{gift.gift}</li>
+                                <button onClick={() => this.removeGift(gift)}> x </button>
                                 </div>
                               )
                             })}
@@ -177,8 +173,8 @@ export default class App extends React.Component {
             </div> {/* giftReceiverFormContainer ends*/}
             <footer>
               <div className="footerContainer FCL">
-                <a class="twitter-share-button" href="https://twitter.com/intent/ QWET
-                + text=Never%20forget%20a%20gift%20again%20with%20this%20Present%20Planner%20by%20@LOCnCode" data-size="large"><i className="fa fa-twitter" aria-hidden="true"></i>Share!</a>
+                <a className="twitter-share-button" href="https://twitter.com/intent/ QWET
+                + text=Never%20forget%20a%20gift%20again%20with%20this%20Present%20Planner%20by%20@LOCnCode" data-size="large"><i className="fa fa-twitter" aria-hidden="true"></i>Like it? Share it!</a>
                 <a className="personalTwitter" href="https://twitter.com/LOCnCode" target="_blank"><i className="fa fa-twitter-square" aria-hidden="true"></i>Tweet Me!</a>
               </div>
               <div className="footerContainer">
@@ -193,10 +189,8 @@ export default class App extends React.Component {
               <div className="loginContainer">
                 <div className="logBubble">
                   <img  src="../../images/buttonbubble.png" alt="Yellow pop art style speech bubble."/>
-                </div>
-                <div className="logInButton">
-                  <button  onClick={this.login}>Log In</button>
-                </div>
+                </div>                
+                  <button className="logInButton" onClick={this.login}>Log In</button>               
               </div>
             <main className="logInPage">
               <div className="titleContainer">
@@ -204,8 +198,8 @@ export default class App extends React.Component {
                   <img src="../../images/popartbubble.png" alt="White pop art style speech bubble with explosion behind it."/>
                 </div>
                 <div className="logInTitle2">
-                  {/*<h2>Present</h2>
-                  <h2>Planner</h2>*/}
+                  <h2>Present</h2>
+                  <h2>Planner</h2>
                 </div>
               </div>
               <div>
@@ -240,22 +234,24 @@ export default class App extends React.Component {
           const mainListReference = snapshot.val();
           const newLists = [];
           const people = [];
+
           for (let originalKey in mainListReference) {
             const peopleList = mainListReference[originalKey];
-            console.log(peopleList);
-             const giftArray = [];
-              // const giftArray = [];
-              // console.log(peopleList[key])
-              for(let gift in peopleList.gifts){
-                giftArray.push(peopleList.gifts[gift])
+            const giftArray = [];
+              for(let giftKey in peopleList.gifts){ 
+                giftArray.push({
+                  gift: peopleList.gifts[giftKey],
+                  key: giftKey
+                })
               }
+              console.log(giftArray);
               people.push({
                 key:originalKey,
                 name:peopleList.name,
                 gifts: giftArray
               })
           } //closes the for 
-          console.log(people)
+
           this.setState ({
             lists: people
           }); //closes the setState

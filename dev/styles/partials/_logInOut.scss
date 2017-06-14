@@ -2,33 +2,41 @@
 
 .titleContainer {
 	position: relative;
-	background-color: white;
+	background-color: $SecondaryColour;
 }
 
 .loginContainer {
-	background-color: pink;
-	border: 2px solid yellow;
 	display: flex;
 	justify-content: flex-end;
 }
 
 .logInTitle1 {
+	width: 100%;
 	margin-top: 0;
-	color: goldenrod;
-	font-family: 'Yesteryear', cursive;
-	font-size: 120px;
+	color: $PrimaryColour;
 	position: absolute;
-	top: -378px;
-  left: -316px;
-  z-index: 5;
+	top: -385px;
+  left: -390px;
+  z-index: 0;
+}
+
+.logInButton {
+	position: absolute;
+  top: 4px;
+  right: 6px;
+  padding: 2%;
+	background: transparent;
+	border: none;
+	font-size: 20px;
 }
 
 .logInTitle2 {
-	font-family: 'Bangers', cursive;
 	font-size: 80px;
-	color: #50BA4B;
+	color: $PrimaryColour;
+	text-shadow: 1px 3px 1px black;
+	letter-spacing: 9px;
 	position: absolute;
-	top: -166px;
+	top: -196px;
   left: -145px;
     h2 {
     	margin: 5px;
@@ -44,12 +52,7 @@
 }
 
 .logBubble {
-	display: inline-block;
-	
-}
-
-.logInButton {
-	background-color: white;
+	display: inline-block;	
 }
 
 .logOutContainer {
@@ -57,7 +60,6 @@
 	display: flex;
 	flex-direction: row;
 	align-items: center;
-	// justify-content: center;
 	justify-content: space-between;
 }
  .logOutTitle, .navSplit {
@@ -65,8 +67,7 @@
 }
 
 h1 {
-	font-family: 'Bangers', cursive;
-	color: white;
+	color: $SecondaryColour;
   margin: 0;
   font-size: 70px;
   letter-spacing: 9px;
@@ -87,6 +88,5 @@ h1 {
   padding: 20% 11%;
 	background-color: transparent;
 	border: none;
-	font-family: 'Bangers', cursive;
 	font-size: 20px;
 }
