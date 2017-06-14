@@ -105,12 +105,12 @@ export default class App extends React.Component {
       [inputVal]: ''
     });
   }
-  removeGift(gift) {
+  removeGiftList() {
     const userId = this.state.user.uid;
-    const userRef =firebase.database().ref(`${userId}/${gift.key}`); //this should be the key for the delete, not the gift
-    // userRef.remove();
+    const userRef =firebase.database().ref(`${userId.gift}`); //this should be the key for the delete, not the gift
+    userRef.remove();
     // console.log(`${userId}/${gift.key}`);
-    console.log(firebase.database().ref("KmZ08TxYxr457mHhNE1/-KmZ0S213a--PmeGAdx-/gifts/-KmZ0TP6eVdBhnPDpej1"));
+    // console.log(firebase.database().ref("KmZ08TxYxr457mHhNE1/-KmZ0S213a--PmeGAdx-/gifts/-KmZ0TP6eVdBhnPDpej1"));
   }
   render() {
     // console.log(this.state.lists);
@@ -120,12 +120,12 @@ export default class App extends React.Component {
     			<div className="app"> {/*root enveloping DOM begins*/}
             <nav className="logOutContainer clearfix">
               <h1 className="logOutTitle">Present Planner</h1>
-              <div className="navSplit">
+              <div className="logButtonHolder">
                 <div className="bubbleBox">
                   <div className="logBubble">
                     <img  src="../../images/buttonbubble.png" alt="Yellow pop art style speech bubble."/>
+                    <button className="logOutButton" onClick={this.logout}>Log Out</button>
                   </div>
-                  <button className="logOutButton" onClick={this.logout}>Log Out</button>
                 </div> {/*bubbBox ends*/}
               </div> {/*navSplit endss*/}
             </nav>
@@ -148,10 +148,11 @@ export default class App extends React.Component {
                         <li className="giftList" key={person.key}>
                           <div className="nameContainer">
                             <p className="personName">{person.name}</p>
+                            <button className="removeReceiverList" onClick={() => this.removeGiftList(person.name)}> x </button>
                           </div>
-                          <form onSubmit={(e) => this.submitGift(e,person.key)}>
+                          <form className="enterReceiverGiftItems" onSubmit={(e) => this.submitGift(e,person.key)}>
                             <input name={`enterReceiverGiftItems${person.key}`} onChange={this.handleChange} type="text" placeholder="Enter Gift Items" value={this.state[inputVal]}/>
-                            <input disabled={!this.state[inputVal]} type="submit" />
+                            <input className="enterGiftButton" disabled={!this.state[inputVal]} type="submit" />
                           </form>
                           <ul>
                             {person.gifts.map((gift) => {
@@ -159,7 +160,7 @@ export default class App extends React.Component {
                               return (
                                 <div className="listItemContainer">
                                   <li className="gifts" key={gift.key}>{gift.gift}</li>
-                                <button onClick={() => this.removeGift(gift)}> x </button>
+                                  <button className="removeGiftButton" onClick={() => this.removeGift(gift.key)}> x </button>
                                 </div>
                               )
                             })}
@@ -173,15 +174,14 @@ export default class App extends React.Component {
             </div> {/* giftReceiverFormContainer ends*/}
             <footer>
               <div className="footerContainer FCL">
-                <a className="twitter-share-button" href="https://twitter.com/intent/ QWET
-                + text=Never%20forget%20a%20gift%20again%20with%20this%20Present%20Planner%20by%20@LOCnCode" data-size="large"><i className="fa fa-twitter" aria-hidden="true"></i>Like it? Share it!</a>
+                <a class="twitter-share-button" href="https://twitter.com/intent/tweet?text=Never%20forget%20a%20gift%20again%20with%20this%20Present%20Planner%20built%20by%20@LOCnCode" target="_blank"><i className="fa fa-twitter" aria-hidden="true"></i>Like it? Share it!</a>
                 <a className="personalTwitter" href="https://twitter.com/LOCnCode" target="_blank"><i className="fa fa-twitter-square" aria-hidden="true"></i>Tweet Me!</a>
               </div>
               <div className="footerContainer">
                 <p>&copy;Laurie OConnor 2017</p>
               </div> {/* footerContainer ends*/}
             </footer>
-    			</div> // root enveloping DOM ends
+    			</div> // root enveloping DOM ends 
     		) //closes the return   
       } else { //the if ends here before the else
         return (
@@ -189,8 +189,8 @@ export default class App extends React.Component {
               <div className="loginContainer">
                 <div className="logBubble">
                   <img  src="../../images/buttonbubble.png" alt="Yellow pop art style speech bubble."/>
-                </div>                
                   <button className="logInButton" onClick={this.login}>Log In</button>               
+                </div>                
               </div>
             <main className="logInPage">
               <div className="titleContainer">

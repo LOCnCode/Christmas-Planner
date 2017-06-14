@@ -21,7 +21,7 @@ body {
 
 main {
 	margin: 0;
-	background-image: url(../../images/xmas-sac.jpg);
+	background-image: url(../../images/xmas-sac-cropped.jpg);
 	background-size: cover;
 	background-repeat: no-repeat;
 	background-attachment: fixed;
@@ -29,5 +29,29 @@ main {
 
 .wrapper {
 	width: 1170px;
-	padding-bottom: 100vh;
+	padding-bottom: 80vh;
+}
+
+
+//Portrait tablet and small desktops 
+@media (max-width: 940px) {
+	.wrapper, .logInTitle2 {
+		background-color: lightgreen;
+	}
+
+}
+
+/* Landscape phone to portrait tablet */
+@media (max-width: 768px) {
+	.wrapper, .logInTitle2 {
+		background-color: lightpink;
+	}
+}
+	
+
+/* Landscape phones and down */
+@media (max-width: 480px) {
+	.wrapper, .logInTitle2 {
+		background-color: lightblue;
+	}
 }
