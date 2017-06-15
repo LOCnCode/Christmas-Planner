@@ -105,13 +105,17 @@ export default class App extends React.Component {
       [inputVal]: ''
     });
   }
-  removeGiftList() {
-    const userId = this.state.user.uid;
-    const userRef =firebase.database().ref(`${userId.gift}`); //this should be the key for the delete, not the gift
+  removeGiftList(giftListKey) {
+    const userRef =firebase.database().ref(`${this.state.user.uid}/${giftListKey}`); //this should be the key for the delete, not the gift
     userRef.remove();
     // console.log(`${userId}/${gift.key}`);
     // console.log(firebase.database().ref("KmZ08TxYxr457mHhNE1/-KmZ0S213a--PmeGAdx-/gifts/-KmZ0TP6eVdBhnPDpej1"));
   }
+  removeGift(giftListKey, giftKey) {
+    const giftRef = firebase.database().ref(`${this.state.user.uid}/${giftListKey}/gifts/${giftKey}`);
+    giftRef.remove();
+  }
+
   render() {
     // console.log(this.state.lists);
     const showChristmasPlanner = () => {
@@ -148,7 +152,7 @@ export default class App extends React.Component {
                         <li className="giftList" key={person.key}>
                           <div className="nameContainer">
                             <p className="personName">{person.name}</p>
-                            <button className="removeReceiverList" onClick={() => this.removeGiftList(person.name)}> x </button>
+                            <button className="removeReceiverList" onClick={() => this.removeGiftList(person.key)}> x </button>
                           </div>
                           <form className="enterReceiverGiftItems" onSubmit={(e) => this.submitGift(e,person.key)}>
                             <input name={`enterReceiverGiftItems${person.key}`} onChange={this.handleChange} type="text" placeholder="Enter Gift Items" value={this.state[inputVal]}/>
@@ -160,7 +164,7 @@ export default class App extends React.Component {
                               return (
                                 <div className="listItemContainer">
                                   <li className="gifts" key={gift.key}>{gift.gift}</li>
-                                  <button className="removeGiftButton" onClick={() => this.removeGift(gift.key)}> x </button>
+                                  <button className="removeGiftButton" onClick={() => this.removeGift(person.key, gift.key)}> x </button>
                                 </div>
                               )
                             })}
