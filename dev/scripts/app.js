@@ -136,7 +136,7 @@ export default class App extends React.Component {
 
             <section className="createGiftReceiverInfoSection">
               <form className="createGiftReceiverForm">
-                <input value={this.state.enterGiftReceiverName} name="enterGiftReceiverName" onChange={this.handleChange} type="text" placeholder="Enter Gift Receiver's Name"/>                                
+                <input value={this.state.enterGiftReceiverName} name="enterGiftReceiverName" onChange={this.handleChange} type="text" placeholder="Enter Gift Receiver's Name" maxlength="15"/>                                
                 <button disabled={!this.state.enterGiftReceiverName} className="createGiftReceiverButton" onClick={this.handleSubmit}>Create New Gift List</button>
               </form> {/*giftReceiverForm ends*/}
             </section> {/*createGiftReceiverInfo list section ends*/}  
@@ -190,27 +190,32 @@ export default class App extends React.Component {
       } else { //the if ends here before the else
         return (
           <div>
+            <nav className="logInNav">
+              <div className="logInSocial">
+                <a class="twitter-share-button" href="https://twitter.com/intent/tweet?text=Never%20forget%20a%20gift%20again%20with%20this%20Present%20Planner%20built%20by%20@LOCnCode" target="_blank"><i className="fa fa-twitter" aria-hidden="true"></i>Like it? Share it!</a>
+                <a className="personalTwitter" href="https://twitter.com/LOCnCode" target="_blank"><i className="fa fa-twitter-square" aria-hidden="true"></i>Tweet Me!</a>
+              </div> {/*logInSocial ends*/}
               <div className="loginContainer">
                 <div className="logBubble">
                   <img  src="../../images/buttonbubble.png" alt="Yellow pop art style speech bubble."/>
                   <button className="logInButton" onClick={this.login}>Log In</button>               
                 </div>                
               </div>
+            </nav>
             <main className="logInPage">
               <div className="titleContainer">
                 <div className="logInTitle1">
-                  <img src="../../images/popartbubble.png" alt="White pop art style speech bubble with explosion behind it."/>
+                  <img src="../../images/popartbubble-med.png" alt="White pop art style speech bubble with explosion behind it."/>
                 </div>
                 <div className="logInTitle2">
                   <h2>Present</h2>
                   <h2>Planner</h2>
-                </div>
-              </div>
+                </div> {/* logInTitle2 ends*/}
+              </div> {/*titleContainer ends*/}
               <div>
-                {/*<p>screenshots?</p>*/}
-              </div>
-            </main>
-            
+                <p>&copy;Laurie OConnor 2017</p>
+              </div> {/* footerContainer ends*/}
+            </main>    
           </div>
         ) //return ends
       } //closes the else
